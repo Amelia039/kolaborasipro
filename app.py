@@ -10,7 +10,7 @@ from sklearn.metrics import mean_absolute_percentage_error
 import pickle5 as pickle 
 
 st.set_page_config(
-    page_title="Electric Production Prediction",
+    page_title="Prediksi Jumlah Saham PT Bayan Resources Tbk. (BYAN.JK)",
     page_icon='https://lh3.googleusercontent.com/DjXftkycmVpJNlxoq-hN1d1-bQ7UkcEr-FeSn6bcFCnnFZb8Y2R0srkfgVqa-GDmlfsfqGxLoFb5o-ukFG_xzq8KSUSBX_369siM0d595.jpg',
     layout='centered',
     initial_sidebar_state="expanded",
@@ -20,7 +20,7 @@ st.set_page_config(
         'About': "# This is a header. This is an *extremely* cool app!"
     }
 )
-st.write("""<h1>Aplikasi Prediksi data Time Series pada Dataset Electric Production Electric Production</h1>""", unsafe_allow_html=True)
+st.write("""<h1>Aplikasi Prediksi data Time Series pada Dataset Saham PT Bayan Resources Tbk. (BYAN.JK)</h1>""", unsafe_allow_html=True)
 
 with st.container():
     with st.sidebar:
@@ -44,22 +44,32 @@ with st.container():
     elif selected == "Description":
         st.subheader("""Pengertian""")
         st.write("""
-        Dataset ini merupakan data jumlah produksi listrik setiap dua belas hari per-tahunnya hitungan setiap bulan januari dari tahun 1985 hingga 2018.
+        Dataset ini merupakan data jumlah saham di PT Bayan Resources Tbk. (BYAN.JK).
         """)
 
         st.subheader("""Kegunaan Dataset""")
         st.write("""
-        Dataset ini digunakan untuk melakukan prediksi perkiraan jumlah produksi listrik.
+        Dataset ini digunakan untuk melakukan prediksi perkiraan jumlah saham.
         """)
 
         st.subheader("""Fitur""")
         st.markdown(
             """
             Fitur-fitur yang terdapat pada dataset:
-            - Period: 
-                - Fitur ini merupakan fitur yang perlihatkan periode dari data time series tersebut. Pada fitur ini data tercatat setiap dua belas hari per-tahunnya hitungan setiap bulan januari dari tahun 1985 hingga 2018.
-            - IPG2211A2N
-                - Fitur berikut ini merupakan data jumlah jumlah produksi listrik.
+            -Date: Kolom ini berisi tanggal transaksi atau perubahan dalam data. Ini adalah kolom yang menunjukkan kapan data harga dan volume terkait dengan aset saham tersebut.
+
+            -Open: Kolom Open menunjukkan harga pembukaan saham pada tanggal tertentu. Harga pembukaan adalah harga perdagangan pertama dari sesi perdagangan pada hari tersebut.
+
+            -High: Kolom High menunjukkan harga tertinggi yang dicapai oleh saham pada tanggal tersebut. Ini mewakili harga tertinggi yang tercapai selama sesi perdagangan.
+
+            -Low: Kolom Low menunjukkan harga terendah yang dicapai oleh saham pada tanggal tertentu. Ini mewakili harga terendah yang tercapai selama sesi perdagangan.
+
+            -Close: Kolom Close menunjukkan harga penutupan saham pada tanggal tersebut. Harga penutupan adalah harga perdagangan terakhir dari sesi perdagangan pada hari tersebut.
+
+            -Adj Close: Kolom Adj Close (Adjusted Close) menunjukkan harga penutupan yang disesuaikan untuk memperhitungkan perubahan harga karena pembagian saham, dividen, atau peristiwa lainnya. Harga penutupan yang disesuaikan memberikan gambaran yang lebih akurat tentang performa saham dari waktu ke waktu.
+
+            -Volume: Kolom Volume menunjukkan jumlah saham yang diperdagangkan pada tanggal tersebut. Volume mencerminkan likuiditas atau aktivitas perdagangan pada hari tersebut.
+
             """
         )
 
@@ -70,11 +80,11 @@ with st.container():
         
         st.subheader("""Tipe Data""")
         st.write("""
-        Tipe data yang di gunakan pada dataset yang diambil berupa jumlah produksi listrik.
+        Tipe data yang di gunakan pada dataset yang diambil yakni numerik.
         """)
 
     elif selected == "Dataset":
-        st.subheader("""Dataset Import Electric_Production""")
+        st.subheader("""Dataset Import saham PT Bayan Resources Tbk. (BYAN.JK)""")
         df = pd.read_csv(
             'https://raw.githubusercontent.com/Amelia039/kolaborasipro/main/BYAN.JK.csv')
         st.dataframe(df, width=600)
@@ -82,7 +92,7 @@ with st.container():
     elif selected == "Prepocessing":
         st.subheader("""Univariate Transform""")
         uni = pd.read_csv('unvariate4fitur.csv')
-        uni = uni.iloc[:, 1:9]
+        uni = uni.iloc[:, 1:5]
         st.dataframe(uni)
         st.subheader("""Normalisasi Data""")
         st.write("""Rumus Normalisasi Data :""")
@@ -109,7 +119,7 @@ with st.container():
     elif selected == "Modeling":
 
         uni = pd.read_csv('unvariate4fitur.csv')
-        uni = uni.iloc[:, 1:9]
+        uni = uni.iloc[:, 1:5]
 
         scaler = MinMaxScaler()
         #scaler.fit(features)
@@ -152,7 +162,7 @@ with st.container():
     elif selected == "Implementation":
         with st.form("Implementation"):
             uni = pd.read_csv('unvariate4fitur.csv')
-            uni = uni.iloc[:, 1:9]
+            uni = uni.iloc[:, 1:5]
 
             scaler = MinMaxScaler()
             #scaler.fit(features)
@@ -196,13 +206,10 @@ with st.container():
             MAPE = mean_absolute_percentage_error(denormalized_data_test,denormalized_data_preds)
 
             # st.subheader("Implementasi Prediksi ")
-            v1 = st.number_input('Masukkan Jumlah barrel yang telah di import pada 7 bulan sebelum periode yang akan di prediksi')
-            v2 = st.number_input('Masukkan Jumlah barrel yang telah di import pada 6 bulan sebelum periode yang akan di prediksi')
-            v3 = st.number_input('Masukkan Jumlah barrel yang telah di import pada 5 bulan sebelum periode yang akan di prediksi')
-            v4 = st.number_input('Masukkan Jumlah barrel yang telah di import pada 4 bulan sebelum periode yang akan di prediksi')
-            v5 = st.number_input('Masukkan Jumlah barrel yang telah di import pada 3 bulan sebelum periode yang akan di prediksi')
-            v6 = st.number_input('Masukkan Jumlah barrel yang telah di import pada 2 bulan sebelum periode yang akan di prediksi')
-            v7 = st.number_input('Masukkan Jumlah barrel yang telah di import pada 1 bulan sebelum periode yang akan di prediksi')
+            v1 = st.number_input('Masukkan Jumlah saham 3 bulan sebelum periode yang akan di prediksi')
+            v2 = st.number_input('Masukkan Jumlah saham 2 bulan sebelum periode yang akan di prediksi')
+            v3 = st.number_input('Masukkan Jumlah saham 1 bulan sebelum periode yang akan di prediksi')
+          
 
             prediksi = st.form_submit_button("Submit")
             if prediksi:
@@ -210,14 +217,11 @@ with st.container():
                     v1,
                     v2,
                     v3,
-                    v4,
-                    v5,
-                    v6,
-                    v7
+                    
                 ])
                 
-                df_min = uni.iloc[:,0:7].min()
-                df_max = uni.iloc[:,0:7].max()
+                df_min = uni.iloc[:,0:3].min()
+                df_max = uni.iloc[:,0:3].max()
                 input_norm = ((inputs - df_min) / (df_max - df_min))
                 input_norm = np.array(input_norm).reshape(1, -1)
 
