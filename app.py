@@ -10,8 +10,8 @@ from sklearn.metrics import mean_absolute_percentage_error
 import pickle5 as pickle 
 
 st.set_page_config(
-    page_title="Crued Oil Prediction",
-    page_icon='https://icon-library.com/images/data-science-icon/data-science-icon-25.jpg',
+    page_title="Electric Production Prediction",
+    page_icon='https://lh3.googleusercontent.com/DjXftkycmVpJNlxoq-hN1d1-bQ7UkcEr-FeSn6bcFCnnFZb8Y2R0srkfgVqa-GDmlfsfqGxLoFb5o-ukFG_xzq8KSUSBX_369siM0d595.jpg',
     layout='centered',
     initial_sidebar_state="expanded",
     menu_items={
@@ -20,12 +20,12 @@ st.set_page_config(
         'About': "# This is a header. This is an *extremely* cool app!"
     }
 )
-st.write("""<h1>Aplikasi Prediksi data Time Series pada Dataset Import Crude Oil To US</h1>""",unsafe_allow_html=True)
+st.write("""<h1>Aplikasi Prediksi data Time Series pada Dataset Electric Production Electric Production</h1>""", unsafe_allow_html=True)
 
 with st.container():
     with st.sidebar:
         selected = option_menu(
-        st.write("""<h2 style = "text-align: center;"><img src="https://icon-library.com/images/data-science-icon/data-science-icon-25.jpg" width="130" height="130"><br></h2>""",unsafe_allow_html=True), 
+            st.write("""<h2 style = "text-align: center;"><img src="https://lh3.googleusercontent.com/DjXftkycmVpJNlxoq-hN1d1-bQ7UkcEr-FeSn6bcFCnnFZb8Y2R0srkfgVqa-GDmlfsfqGxLoFb5o-ukFG_xzq8KSUSBX_369siM0d59" width="130" height="130"><br></h2>""", unsafe_allow_html=True),
         ["Home", "Description", "Dataset", "Prepocessing", "Modeling", "Implementation"], 
             icons=['house', 'file-earmark-font', 'bar-chart', 'gear', 'arrow-down-square', 'check2-square'], menu_icon="cast", default_index=0,
             styles={
@@ -38,18 +38,18 @@ with st.container():
 
     if selected == "Home":
         st.write("""<h3 style = "text-align: center;">
-        <img src="https://imgsrv2.voi.id/0GXpHiKI-CGE-Due4Lf-FneHR564kSBNlKNPpssXH7w/auto/1200/675/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy8xODYxMzIvMjAyMjA3MDQxMzI2LW1vYmlsZS5qcGc.jpg" width="500" height="300">
+        <img src="data:image/jpeg;base64,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" width="500" height="300">
         </h3>""",unsafe_allow_html=True)
 
     elif selected == "Description":
         st.subheader("""Pengertian""")
         st.write("""
-        Dataset ini merupakan data jumlah barel minyak mentah yang telah di import dari seluruh dunia ke negara Amerika Serikat dalam hitungan perbulan data ini diambil dari bulan januari 2009 hingga januari 2021.
+        Dataset ini merupakan data jumlah produksi listrik setiap dua belas hari per-tahunnya hitungan setiap bulan januari dari tahun 1985 hingga 2018.
         """)
 
         st.subheader("""Kegunaan Dataset""")
         st.write("""
-        Dataset ini digunakan untuk melakukan prediksi perkiraan jumlah barel minyak yang akan di import dari seluruh dunia ke negara Amerika Serikat pada periode berikutnya.
+        Dataset ini digunakan untuk melakukan prediksi perkiraan jumlah produksi listrik.
         """)
 
         st.subheader("""Fitur""")
@@ -57,30 +57,31 @@ with st.container():
             """
             Fitur-fitur yang terdapat pada dataset:
             - Period: 
-                - Fitur ini merupakan fitur yang perlihatkan periode dari data time series tersebut. Pada fitur ini data tercatat setiap bulannya mulai dari Januari 2009 - Januari 2021
-            - Imports Crude Oil Monthly (thousand barrels).
-                - Fitur berikut ini merupakan data jumlah barel minyak mentah yang telah di terima oleh Amerika Serikat hasil dari Import seluruh dunia.
+                - Fitur ini merupakan fitur yang perlihatkan periode dari data time series tersebut. Pada fitur ini data tercatat setiap dua belas hari per-tahunnya hitungan setiap bulan januari dari tahun 1985 hingga 2018.
+            - IPG2211A2N
+                - Fitur berikut ini merupakan data jumlah jumlah produksi listrik.
             """
         )
 
         st.subheader("""Sumber Dataset""")
         st.write("""
         Sumber data di dapatkan melalui website Github.com, Berikut merupakan link untuk mengakses sumber dataset.
-        <a href="https://github.com/rishabh89007/Time_Series_Datasets/blob/main/Imports%20Crude%20Oil.csv">Klik disini</a>""", unsafe_allow_html=True)
+        <a href="https://finance.yahoo.com/quote/BYAN.JK/history/">Klik disini</a>""", unsafe_allow_html=True)
         
         st.subheader("""Tipe Data""")
         st.write("""
-        Tipe data yang di gunakan pada dataset Import Crude Oil ini adalah NUMERICAL.
+        Tipe data yang di gunakan pada dataset yang diambil berupa jumlah produksi listrik.
         """)
 
     elif selected == "Dataset":
-        st.subheader("""Dataset Import Crude Oil""")
-        df = pd.read_csv('https://raw.githubusercontent.com/HanifSantoso05/dataset_matkul/main/Imports%20Crude%20Oil.csv')
+        st.subheader("""Dataset Import Electric_Production""")
+        df = pd.read_csv(
+            'https://raw.githubusercontent.com/Amelia039/kolaborasipro/main/BYAN.JK.csv')
         st.dataframe(df, width=600)
 
     elif selected == "Prepocessing":
         st.subheader("""Univariate Transform""")
-        uni = pd.read_csv('univaried_trans_7fitur.csv')
+        uni = pd.read_csv('unvariate4fitur.csv')
         uni = uni.iloc[:, 1:9]
         st.dataframe(uni)
         st.subheader("""Normalisasi Data""")
@@ -107,7 +108,7 @@ with st.container():
 
     elif selected == "Modeling":
 
-        uni = pd.read_csv('univaried_trans_7fitur.csv')
+        uni = pd.read_csv('unvariate4fitur.csv')
         uni = uni.iloc[:, 1:9]
 
         scaler = MinMaxScaler()
@@ -150,7 +151,7 @@ with st.container():
 
     elif selected == "Implementation":
         with st.form("Implementation"):
-            uni = pd.read_csv('univaried_trans_7fitur.csv')
+            uni = pd.read_csv('unvariate4fitur.csv')
             uni = uni.iloc[:, 1:9]
 
             scaler = MinMaxScaler()
